@@ -21,17 +21,17 @@ function Nav() {
                 <div className="ml-10 flex items-baseline space-x-4">
                   <Link to="/">
                     <p className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium uppercase">
-                      Team
+                    Arena rankings
+                    </p>
+                  </Link>
+                  <Link to="/">
+                    <p className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium uppercase">
+                    Team
                     </p>
                   </Link>
                   <Link to="/">
                     <p className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium uppercase">
                       About
-                    </p>
-                  </Link>
-                  <Link to="/">
-                    <p className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium uppercase">
-                      Arena rankings
                     </p>
                   </Link>
                   <Link to="/">
