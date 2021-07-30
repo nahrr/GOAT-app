@@ -1,61 +1,54 @@
-import React from 'react';
+import React from "react";
 import { IPost } from "./ArenaAPI";
+import {
+  ChevronDoubleDownIcon,
+  ChevronDoubleUpIcon,
+} from "@heroicons/react/solid";
 
 type ArenaCardProps = {
-  post?: IPost,
-  rank: number,
-  team: string,
-  rating: number
-  faction: string,
-  realm: string,
-  key: number,
-  class: any
-}
+  post?: IPost;
+  rank: number;
+  team: string;
+  rating: number;
+  faction: string;
+  realm: string;
+  key: number;
+  class: any;
+  played: number;
+  won: number;
+  lost: number;
+};
 
 interface ArenaCardState {
   factionType: string;
   expanded: boolean;
-  playerClass: [];
 }
 
-export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState>{
-
+export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
   constructor(props: ArenaCardProps) {
-    super(props)
+    super(props);
 
     this.state = {
       factionType: this.props.faction,
       expanded: false,
-      playerClass: this.props.class
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
-    this.setState(prevState => ({
-      expanded: !prevState.expanded
+    this.setState((prevState) => ({
+      expanded: !prevState.expanded,
     }));
   }
-  /*
-  warrior: 1
-  paladin: 2
-  hunter: 3
-  rogue: 4
-  priest: 5
-  shaman: 7
-  mage: 8
-  warlock: 9
-  druid: 11
-  */
 
   render() {
-
-    let classId = ["x"]
-
-    if (this.state.playerClass) {
-      this.state.playerClass.forEach(function (arrayItem: any) {
-        let classes = arrayItem.trim()
-
+    let classId = ["x"];
+    let factionImage;
+    let factionStyle;
+    let winPercent = (this.props.won / this.props.played) * 100;
+    if (this.props.class) {
+      this.props.class.forEach(function (arrayItem: any) {
+        let classes = arrayItem.trim();
 
         switch (classes) {
           case "1":
@@ -83,48 +76,78 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState>{
             classId.push("/images/assets/classicon_warlock.jpg");
             break;
           case "11":
-            classId.push("/images/assets/classicon_druid.jpg")
+            classId.push("/images/assets/classicon_druid.jpg");
             break;
         }
       });
     }
 
-    let factionImage;
-    let factionStyle;
     if (this.props.faction === "ALLIANCE") {
-      factionImage = "/images/assets/alliance.webp"
+      factionImage = "/images/assets/alliance.webp";
       factionStyle = "text-blue-500";
-    }
-    else if (this.props.faction === "HORDE") {
-      factionImage = "/images/assets/horde.webp"
+    } else if (this.props.faction === "HORDE") {
+      factionImage = "/images/assets/horde.webp";
       factionStyle = "text-red";
     }
 
     return (
-      <><tr className="cursor-pointer" onClick={this.handleClick} >
-        <td className="">
-          <div>
-            <p className="text-green-400 py-4 px-6 font-medium"> {this.props.rank} </p>
-          </div>
-        </td>
-        <td className="text-red py-4 px-6">{this.props.team}</td>
-        <td className="text-red py-4 px-6">
-          <img src={factionImage}
-            className="w-10 h-10 object-cover rounded-full"
-            alt={factionImage} />
-        </td>
-        <td className={"py-4 px-6 uppercase font-medium " + factionStyle}>{this.props.realm} </td>
-        <td className="text-white py-4 px-6 font-medium"> {this.props.rating}</td>
-        </tr>
-        <tr className="" >{this.state.expanded ?
-         
-          <td className="justify-center inline-block">
-            <img className="inline-block mx-auto" src={classId[1]} alt="" />
-            <img className="inline-block mx-auto" src={classId[2]} alt="" />
-            <img className="inline-block mx-auto" src={classId[3]} alt="" />
+      <>
+        <tr className="cursor-pointer" onClick={this.handleClick}>
+          <td>
+            {this.state.expanded ? (
+              <ChevronDoubleUpIcon className="h-6 w-6" />
+            ) : (
+              <ChevronDoubleDownIcon className="h-6 w-6" />
+            )}
           </td>
-          : ""}</tr>
+          <td className="">
+            <div>
+              <p className="text-green-400 py-4 px-6 font-medium">
+                {this.props.rank}
+              </p>
+            </div>
+          </td>
+          <td className="text-red py-4 px-6">{this.props.team}</td>
+          <td className="justify-center inline-block">
+            <img
+              className="inline-block mx-auto w-1/5 mt-4"
+              src={classId[1]}
+              alt="class"
+            />
+            <img
+              className="inline-block mx-auto w-1/5 mt-4"
+              src={classId[2]}
+              alt="class"
+            />
+            <img
+              className="inline-block mx-auto w-1/5 mt-4"
+              src={classId[3]}
+              alt="class"
+            />
+          </td>
+          <td className={"py-4 px-6 uppercase font-medium " + factionStyle}>
+            <img
+              src={factionImage}
+              className="w-8 h-8 object-cover rounded-full inline-block mr-4"
+              alt={factionImage}
+            />
+            {this.props.realm}
+          </td>
+          <td className="text-white py-4 px-6 font-medium">
+            {this.props.rating}
+          </td>
+        </tr>
+        <tr className="">
+          {this.state.expanded ? (
+            <td className="text-white py-4 px-6 font-medium">
+              {Math.round(winPercent) + "%"} {"Wins:" + this.props.won}
+              {"Lost: " + this.props.lost}
+            </td>
+          ) : (
+            null
+          )}
+        </tr>
       </>
-    )
+    );
   }
 }

@@ -1,6 +1,5 @@
 import React from 'react'
-import { ArenaRankingsFetcher, IPost, } from './ArenaAPI';
-import { useState } from 'react';
+
 import _ from "lodash"
 
 export const Pagination = ({ postsPerPage, totalPosts, paginate, minPageNumberLimit,
@@ -12,7 +11,6 @@ export const Pagination = ({ postsPerPage, totalPosts, paginate, minPageNumberLi
     }
 ) => {
 
-    console.log(currentPage)
     const pageNumbers = [];
 
     for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {

@@ -2,7 +2,8 @@ import * as React from "react";
 import { ArenaRankings } from "./ArenaRankings";
 import axios from "axios";
 import Pagination from "./Pagination";
-
+import Button from "./Button";
+import Loader from "./Loading";
 export interface IPost {
   id: number;
   name: string;
@@ -10,35 +11,40 @@ export interface IPost {
   region: string;
   season: string;
   bracket: string;
+  season_match_statistics: {
+    played: number;
+    won: number;
+    lost: number;
+  };
   faction: {
     type: string;
-  }
+  };
   rating: number;
   rank: number;
   team: {
-    name: string,
+    name: string;
     realm: {
       slug: string;
-    },
-    members:[{
-      character: {
-      playable_class: {
-        key: {
-          href: string
-        },
-        id: number;
+    };
+    members: [
+      {
+        character: {
+          playable_class: {
+            key: {
+              href: string;
+            };
+            id: number;
+          };
+        };
+        rating: number;
       }
-    }
-      rating: number;
-    }
-  ] 
-}
+    ];
+  };
 }
 
 const defaultPosts: IPost[] = [];
 
 export const ArenaRankingsFetcher = () => {
-
   const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] =
     React.useState(defaultPosts);
 
@@ -48,22 +54,33 @@ export const ArenaRankingsFetcher = () => {
   const [error, setError]: [string, (error: string) => void] =
     React.useState("");
 
-  const [currentPage, setCurrentPage]: [number, (currentPage: number) => any]
-    = React.useState(1);
-  const [postsPerPage]: [number, (postsPerPage: number) => any]
-    = React.useState(10);
+  const [currentPage, setCurrentPage]: [number, (currentPage: number) => any] =
+    React.useState(1);
 
-  const [pageNumberLimit, setpageNumberLimit] = React.useState(5);
-  const [maxPageNumberLimit, setmaxPageNumberLimit]: [number, (currentPage: number) => any] = React.useState(5);
-  const [minPageNumberLimit, setminPageNumberLimit]: [number, (currentPage: number) => any] = React.useState(0);
+  const [postsPerPage]: [number, (postsPerPage: number) => any] =
+    React.useState(10);
 
+  const [pageNumberLimit] = React.useState(5);
+  const [maxPageNumberLimit, setmaxPageNumberLimit]: [
+    number,
+    (currentPage: number) => any
+  ] = React.useState(5);
+  const [minPageNumberLimit, setminPageNumberLimit]: [
+    number,
+    (currentPage: number) => any
+  ] = React.useState(0);
 
-  const url2 = "http://localhost:7071/api/ranks";
+  const defaultURL = "http://localhost:7071/api/ranks/";
+  const [bracket, setBracket]: [string, (bracket: string) => void] =
+    React.useState("");
+
+  if (bracket === "") {
+    setBracket("2v2");
+  }
 
   React.useEffect(() => {
-
     axios
-      .get(url2, {
+      .get(defaultURL + bracket, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -77,15 +94,15 @@ export const ArenaRankingsFetcher = () => {
         let error = axios.isCancel(ex)
           ? "Request Cancelled"
           : ex.code === "ECONNABORTED"
-            ? "A timeout has occurred"
-            : ex.response.status === 404
-              ? "Resource Not Found"
-              : "An unexpected error has occurred";
+          ? "A timeout has occurred"
+          : ex.response.status === 404
+          ? "Resource Not Found"
+          : "An unexpected error has occurred";
 
         setError(error);
         setLoading(false);
       });
-  }, []);
+  }, [bracket]);
 
   // Get current posts
   const indexOfLastPost: number = currentPage * postsPerPage;
@@ -105,7 +122,6 @@ export const ArenaRankingsFetcher = () => {
 
   const handlePrevbtn = () => {
     setCurrentPage(currentPage - 1);
-    alert("ett")
     if ((currentPage - 1) % pageNumberLimit === 0) {
       setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
@@ -114,16 +130,50 @@ export const ArenaRankingsFetcher = () => {
 
   return (
     <>
-      {loading && <h2 className="text-white mx-auto"> laddar som fan</h2>}
-
+      <div className="mx-auto mt-12 w-2/3">
+        <Button
+          onClick={() => {
+            setBracket("2v2");
+            setLoading(true);
+          }}
+          children="2v2"
+        />
+        <Button
+          onClick={() => {
+            setBracket("3v3");
+            setLoading(true);
+          }}
+          children="3v3"
+        />
+        <Button
+          onClick={() => {
+            setBracket("5v5");
+            setLoading(true);
+          }}
+          children="5v5"
+        />
+        {loading && (
+          <div className="flex flex-col items-center mt-2">
+            <Loader />
+          </div>
+        )}
+      </div>
       <ArenaRankings posts={currentPosts} />
-      <Pagination postsPerPage={postsPerPage}
-        totalPosts={posts.length} paginate={paginate}
-        minPageNumberLimit={minPageNumberLimit} maxPageNumberLimit={maxPageNumberLimit}
+      <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={posts.length}
+        paginate={paginate}
+        minPageNumberLimit={minPageNumberLimit}
+        maxPageNumberLimit={maxPageNumberLimit}
         currentPage={currentPage}
         handlePrevbtn={handlePrevbtn}
-        handleNextbtn={handleNextbtn} />
-      {error && <p className="error">{error}</p>}
+        handleNextbtn={handleNextbtn}
+      />
+      {error && (
+        <div className="flex flex-col items-center mt-2">
+          <p className="error">{error}</p>
+        </div>
+      )}
     </>
   );
 };
