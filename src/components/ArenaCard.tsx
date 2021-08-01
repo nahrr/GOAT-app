@@ -111,6 +111,7 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
           <td className="justify-center mr-2">
             {classId.map((classPicture, i) => (
                  <img
+                 key={i}
                  className="inline-block w-8 h-8 object-cover rounded-lg"
                  src={classPicture}
                  alt="class"
