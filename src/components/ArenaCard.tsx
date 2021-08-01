@@ -42,7 +42,7 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
   }
 
   render() {
-    let classId = ["x"];
+    let classId: (string | undefined)[] = [];
     let factionImage;
     let factionStyle;
     let winPercent = (this.props.won / this.props.played) * 100;
@@ -91,7 +91,7 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
     }
 
     return (
-      <>
+      <React.Fragment>
         <tr className="cursor-pointer" onClick={this.handleClick}>
           <td>
             {this.state.expanded ? (
@@ -108,22 +108,14 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
             </div>
           </td>
           <td className="text-red py-4 px-6">{this.props.team}</td>
-          <td className="justify-center inline-block">
-            <img
-              className="inline-block mx-auto w-1/5 mt-4"
-              src={classId[1]}
-              alt="class"
-            />
-            <img
-              className="inline-block mx-auto w-1/5 mt-4"
-              src={classId[2]}
-              alt="class"
-            />
-            <img
-              className="inline-block mx-auto w-1/5 mt-4"
-              src={classId[3]}
-              alt="class"
-            />
+          <td className="justify-center mr-2">
+            {classId.map((classPicture, i) => (
+                 <img
+                 className="inline-block w-8 h-8 object-cover rounded-lg"
+                 src={classPicture}
+                 alt="class"
+               />
+            ))}
           </td>
           <td className={"py-4 px-6 uppercase font-medium " + factionStyle}>
             <img
@@ -147,7 +139,7 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
             null
           )}
         </tr>
-      </>
+      </React.Fragment>
     );
   }
 }
