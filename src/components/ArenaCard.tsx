@@ -132,7 +132,7 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
         </tr>
         <tr className="">
           {this.state.expanded ? (
-            <td className="text-white py-4 px-6 font-medium">
+            <td className="text-white font-medium">
               {Math.round(winPercent) + "%"} {"Wins:" + this.props.won}
               {"Lost: " + this.props.lost}
             </td>

@@ -21,12 +21,12 @@ function Nav() {
                 <div className="ml-10 flex items-baseline space-x-4">
                   <Link to="/">
                     <p className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium uppercase">
-                    Arena rankings
+                      Arena rankings
                     </p>
                   </Link>
                   <Link to="/">
                     <p className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium uppercase">
-                    Team
+                      Team
                     </p>
                   </Link>
                   <Link to="/">
@@ -101,9 +101,7 @@ function Nav() {
           {(ref) => (
             <div className="md:hidden" id="mobile-menu">
               <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <p
-                  className="hover:bg-black text-white block px-3 py-2 rounded-md text-base font-medium uppercase"
-                >
+                <p className="hover:bg-black text-white block px-3 py-2 rounded-md text-base font-medium uppercase">
                   Rankings
                 </p>
               </div>
