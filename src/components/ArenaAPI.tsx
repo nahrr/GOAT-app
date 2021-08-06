@@ -70,6 +70,12 @@ export const ArenaRankingsFetcher = () => {
     (currentPage: number) => any
   ] = React.useState(0);
 
+  const [onLoadBtn, setOnLoadBtn]: [boolean, (onLoadBtn: boolean) => void] =
+    React.useState<boolean>(true);
+
+  const [onClickBtn, setOnClickBtn]: [string, (onClickBtn: string) => void] =
+    React.useState("");
+
   const defaultURL = "http://localhost:7071/api/ranks/";
   const [bracket, setBracket]: [string, (bracket: string) => void] =
     React.useState("");
@@ -94,10 +100,10 @@ export const ArenaRankingsFetcher = () => {
         let error = axios.isCancel(ex)
           ? "Request Cancelled"
           : ex.code === "ECONNABORTED"
-          ? "A timeout has occurred"
-          : ex.response.status === 404
-          ? "Resource Not Found"
-          : "An unexpected error has occurred";
+            ? "A timeout has occurred"
+            : ex.response.status === 404
+              ? "Resource Not Found"
+              : "An unexpected error has occurred";
 
         setError(error);
         setLoading(false);
@@ -127,6 +133,23 @@ export const ArenaRankingsFetcher = () => {
       setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
     }
   };
+  // set style on page page load
+  let onLoadStyle = "text-white bg-green-500"
+  let onClickStyle2v2 = ""
+  let onClickStyle3v3 = ""
+  let onClickStyle5v5 = ""
+  if (onLoadBtn === false) {
+    onLoadStyle = ""
+  }
+  switch (onClickBtn) {
+    case "2v2": onClickStyle2v2 = "text-white bg-green-500 "
+      break;
+    case "3v3": onClickStyle3v3 = "text-white bg-green-500 "
+      break;
+    case "5v5": onClickStyle5v5 = "text-white bg-green-500 "
+      break;
+  }
+
 
   return (
     <>
@@ -135,22 +158,33 @@ export const ArenaRankingsFetcher = () => {
           onClick={() => {
             setBracket("2v2");
             setLoading(true);
+            setOnLoadBtn(false)
+            setOnClickBtn("2v2");
           }}
           children="2v2"
+          onLoadStyle={onLoadStyle}
+          onClickStyle2v2={onClickStyle2v2}
+
         />
         <Button
           onClick={() => {
             setBracket("3v3");
             setLoading(true);
+            setOnLoadBtn(false)
+            setOnClickBtn("3v3");
           }}
           children="3v3"
+          onClickStyle3v3={onClickStyle3v3}
         />
         <Button
           onClick={() => {
             setBracket("5v5");
             setLoading(true);
+            setOnLoadBtn(false)
+            setOnClickBtn("5v5");
           }}
           children="5v5"
+          onClickStyle5v5={onClickStyle5v5}
         />
         {loading && (
           <div className="flex flex-col items-center mt-2">
