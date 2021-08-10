@@ -10,17 +10,18 @@ type ArenaCardProps = {
   rank: number;
   team: string;
   rating: number;
-  faction: string;
+  faction: string | null;
   realm: string;
   key: number;
   class: any;
   played: number;
   won: number;
   lost: number;
+  name?: any;
 };
 
 interface ArenaCardState {
-  factionType: string;
+  factionType?: string | null;
   expanded: boolean;
 }
 
@@ -40,8 +41,11 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
       expanded: !prevState.expanded,
     }));
   }
+ 
 
   render() {
+    
+  
     let classId: (string | undefined)[] = [];
     let factionImage;
     let factionStyle;
@@ -89,11 +93,15 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
       factionImage = "/images/assets/horde.webp";
       factionStyle = "text-red";
     }
-
     return (
+
+      
       <React.Fragment>
-        <tr className="cursor-pointer" onClick={this.handleClick}>
-          <td>
+        <tr
+          className="cursor-pointer border-t-2 border-yellow-100"
+          onClick={this.handleClick}
+        >
+          <td className="text-grey py-4 px-6 font-medium">
             {this.state.expanded ? (
               <ChevronDoubleUpIcon className="h-6 w-6" />
             ) : (
@@ -110,15 +118,17 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
           <td className="text-red py-4 px-6">{this.props.team}</td>
           <td className="justify-center mr-2">
             {classId.map((classPicture, i) => (
-                 <img
-                 key={i}
-                 className="inline-block w-8 h-8 object-cover rounded-lg"
-                 src={classPicture}
-                 alt="class"
-               />
+              <img
+                key={i}
+                className="inline-block w-8 h-8 object-cover rounded-lg"
+                src={classPicture}
+                alt="class"
+              />
             ))}
           </td>
-          <td className={"py-4 px-6 uppercase font-medium " + factionStyle}>
+          <td
+            className={"justify-center uppercase font-medium " + factionStyle}
+          >
             <img
               src={factionImage}
               className="w-8 h-8 object-cover rounded-full inline-block mr-4"
@@ -130,16 +140,35 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
             {this.props.rating}
           </td>
         </tr>
-        <tr className="">
-          {this.state.expanded ? (
-            <td className="text-white font-medium">
-              {Math.round(winPercent) + "%"} {"Wins:" + this.props.won}
-              {"Lost: " + this.props.lost}
-            </td>
-          ) : (
-            null
-          )}
-        </tr>
+
+        {this.state.expanded ? (
+          <>
+            <tr className="border-t-2 border-dashed border-yellow-100 border-opacity-25">
+              <th></th>
+              <th></th>
+              <th className="text-white text-white py-1 px-6">Members</th>
+              <th className="text-white text-white py-1 px-6">Win %</th>
+              <th className="text-white text-white py-1 px-6">Won</th>
+              <th className="text-white text-white py-1 px-6">Lost</th>
+            </tr>
+            <tr className="">
+              <td></td>
+              <td></td>
+              <td className="text-red py-4 px-6 font-medium whitespace-pre-line">
+                {this.props.name.join('\n')} 
+              </td>
+              <td className="text-green-300 py-4 px-6 font-medium">
+                {Math.round(winPercent) + "%"}
+              </td>
+              <td className="text-green-300 py-4 px-6 font-medium">
+                {this.props.won}
+              </td>
+              <td className="text-red-300 py-4 px-6 font-medium">
+                {this.props.lost}
+              </td>
+            </tr>
+          </>
+        ) : null}
       </React.Fragment>
     );
   }

@@ -16,8 +16,8 @@ export interface IPost {
     won: number;
     lost: number;
   };
-  faction: {
-    type: string;
+  faction:null| {
+    type: string | null; 
   };
   rating: number;
   rank: number;
@@ -29,6 +29,7 @@ export interface IPost {
     members: [
       {
         character: {
+          name: string;
           playable_class: {
             key: {
               href: string;
@@ -116,17 +117,19 @@ export const ArenaRankingsFetcher = () => {
   const currentPosts: IPost[] = posts.slice(indexOfFirstPost, indexOfLastPost);
   // Change page to
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
+  console.log(posts.length)
   const handleNextbtn = () => {
+
     setCurrentPage(currentPage + 1);
 
     if (currentPage + 1 > maxPageNumberLimit) {
       setmaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
     }
+
   };
 
-  const handlePrevbtn = () => {
+  const handlePrevbtn = () => { 
     setCurrentPage(currentPage - 1);
     if ((currentPage - 1) % pageNumberLimit === 0) {
       setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
@@ -160,6 +163,7 @@ export const ArenaRankingsFetcher = () => {
             setLoading(true);
             setOnLoadBtn(false)
             setOnClickBtn("2v2");
+            setCurrentPage(1);
           }}
           children="2v2"
           onLoadStyle={onLoadStyle}
@@ -172,6 +176,7 @@ export const ArenaRankingsFetcher = () => {
             setLoading(true);
             setOnLoadBtn(false)
             setOnClickBtn("3v3");
+            setCurrentPage(1);
           }}
           children="3v3"
           onClickStyle3v3={onClickStyle3v3}
@@ -182,6 +187,7 @@ export const ArenaRankingsFetcher = () => {
             setLoading(true);
             setOnLoadBtn(false)
             setOnClickBtn("5v5");
+            setCurrentPage(1);
           }}
           children="5v5"
           onClickStyle5v5={onClickStyle5v5}

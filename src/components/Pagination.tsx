@@ -1,6 +1,10 @@
 import React from "react";
-
-import _ from "lodash";
+import {
+  ChevronRightIcon,
+  ChevronLeftIcon,
+  ChevronDoubleRightIcon,
+  ChevronDoubleLeftIcon,
+} from "@heroicons/react/solid";
 
 export const Pagination = ({
   postsPerPage,
@@ -29,21 +33,30 @@ export const Pagination = ({
 
   return (
     <div className="flex flex-row m-auto w-1/6">
-      {pageNumbers.map((number) => {
-        if (_.inRange(number, currentPage - 3, currentPage + 3)) {
-          return (
-            <button
-              key={number}
-              className="text-white rounded-full bg-red inline-block mx-auto px-4 hover:bg-red-800 "
-              onClick={() => paginate(number)}
-            >
-              {number}
-            </button>
-          );
-        } else {
-          return null;
-        }
-      })}
+      <button
+        className="text-white rounded-sm bg-red inline-block mx-auto px-4 hover:bg-red-800 "
+        onClick={() => paginate(1)}
+      >
+        <ChevronDoubleLeftIcon className="h-6 w-6" />
+      </button>
+      <button
+        className="text-white rounded-sm bg-red inline-block mx-auto px-4 hover:bg-red-800 "
+        onClick={() => paginate(currentPage - 1)}
+      >
+        <ChevronLeftIcon className="h-6 w-6" />
+      </button>
+      <button
+        className="text-white rounded-sm bg-red inline-block mx-auto px-4 hover:bg-red-800 "
+        onClick={() => paginate(currentPage + 1)}
+      >
+        <ChevronRightIcon className="h-6 w-6" />
+      </button>
+      <button
+        className="text-white rounded-sm bg-red inline-block mx-auto px-4 hover:bg-red-800 "
+        onClick={() => paginate(pageNumbers.length)}
+      >
+        <ChevronDoubleRightIcon className="h-6 w-6" />
+      </button>
     </div>
   );
 };
