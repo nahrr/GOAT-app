@@ -24,16 +24,6 @@ export const ArenaRankingsFetcher = () => {
   const [postsPerPage]: [number, (postsPerPage: number) => any] =
     React.useState(10);
 
-  const [pageNumberLimit] = React.useState(5);
-  const [maxPageNumberLimit, setmaxPageNumberLimit]: [
-    number,
-    (currentPage: number) => any
-  ] = React.useState(5);
-  const [minPageNumberLimit, setminPageNumberLimit]: [
-    number,
-    (currentPage: number) => any
-  ] = React.useState(0);
-
   const [onLoadBtn, setOnLoadBtn]: [boolean, (onLoadBtn: boolean) => void] =
     React.useState<boolean>(true);
 
