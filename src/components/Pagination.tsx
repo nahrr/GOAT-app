@@ -10,19 +10,11 @@ export const Pagination = ({
   postsPerPage,
   totalPosts,
   paginate,
-  minPageNumberLimit,
-  maxPageNumberLimit,
-  handlePrevbtn,
-  handleNextbtn,
   currentPage,
 }: {
   postsPerPage: number;
   totalPosts: number;
   paginate: Function;
-  minPageNumberLimit: number;
-  maxPageNumberLimit: number;
-  handlePrevbtn: Function;
-  handleNextbtn: Function;
   currentPage: any;
 }) => {
   const pageNumbers = [];

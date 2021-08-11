@@ -83,21 +83,6 @@ export const ArenaRankingsFetcher = () => {
     setCurrentPage(pageNumber);
   };
 
-  const handleNextbtn = () => {
-    setCurrentPage(currentPage + 1);
-    if (currentPage + 1 > maxPageNumberLimit) {
-      setmaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
-      setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
-    }
-  };
-
-  const handlePrevbtn = () => {
-    setCurrentPage(currentPage - 1);
-    if ((currentPage - 1) % pageNumberLimit === 0) {
-      setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
-      setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
-    }
-  };
   // set style on page page load
   let onLoadStyle = "text-white bg-green-500";
   let onClickStyle2v2 = "";
@@ -166,11 +151,7 @@ export const ArenaRankingsFetcher = () => {
         postsPerPage={postsPerPage}
         totalPosts={posts.length}
         paginate={paginate}
-        minPageNumberLimit={minPageNumberLimit}
-        maxPageNumberLimit={maxPageNumberLimit}
         currentPage={currentPage}
-        handlePrevbtn={handlePrevbtn}
-        handleNextbtn={handleNextbtn}
       />
       {error && (
         <div className="flex flex-col items-center mt-2">
