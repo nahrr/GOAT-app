@@ -1,5 +1,5 @@
 import React from "react";
-import { IPost } from "./ArenaAPI";
+import {IPost} from "../Interface/IPost";
 import {
   ChevronDoubleDownIcon,
   ChevronDoubleUpIcon,
@@ -18,20 +18,20 @@ type ArenaCardProps = {
   won: number;
   lost: number;
   name?: any;
+  currentPage: number;
 };
 
-interface ArenaCardState {
+export interface ArenaCardState {
   factionType?: string | null;
-  expanded: boolean;
+  expanded?: boolean | null;
 }
-
 export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
   constructor(props: ArenaCardProps) {
     super(props);
 
     this.state = {
       factionType: this.props.faction,
-      expanded: false,
+      expanded: null,
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -41,11 +41,14 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
       expanded: !prevState.expanded,
     }));
   }
- 
+
+  componentDidUpdate(prevProps: ArenaCardProps) {
+    if (prevProps.currentPage !== this.props.currentPage) {
+      this.setState({ expanded: false });
+    }
+  }
 
   render() {
-    
-  
     let classId: (string | undefined)[] = [];
     let factionImage;
     let factionStyle;
@@ -94,8 +97,6 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
       factionStyle = "text-red";
     }
     return (
-
-      
       <React.Fragment>
         <tr
           className="cursor-pointer border-t-2 border-yellow-100"
@@ -155,7 +156,7 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
               <td></td>
               <td></td>
               <td className="text-red py-4 px-6 font-medium whitespace-pre-line">
-                {this.props.name.join('\n')} 
+                {this.props.name.join("\n")}
               </td>
               <td className="text-green-300 py-4 px-6 font-medium">
                 {Math.round(winPercent) + "%"}

@@ -1,8 +1,9 @@
 import React from "react";
-import { IPost } from "./ArenaAPI";
+import {IPost} from "../Interface/IPost";
 import { ArenaCard } from "./ArenaCard";
 
-export function ArenaRankings({ posts }: { posts: IPost[] }) {
+export function ArenaRankings({ posts, currentPage }: { posts: IPost[]; currentPage: number}) {
+  
   return (
     <div className="">
       <div className="overflow-x-auto mt-12 ">
@@ -18,28 +19,26 @@ export function ArenaRankings({ posts }: { posts: IPost[] }) {
             </tr>
           </thead>
           {/* divide-y divide-yellow-100 */}
-          <tbody className=""> 
+          <tbody className="">
             {posts.map((post, i) => (
               <ArenaCard
                 key={i}
                 rank={post.rank}
                 team={post.team.name}
-                faction={post.faction==null?null:post.faction.type}
+                faction={post.faction == null ? null : post.faction.type}
                 realm={post.team.realm.slug}
                 rating={post.rating}
                 played={post.season_match_statistics.played}
                 won={post.season_match_statistics.won}
                 lost={post.season_match_statistics.lost}
                 name={post.team.members.map(
-                  (player_name,i) =>
-                  player_name.character.name 
-                )
-
-                }
+                  (player_name, i) => player_name.character.name
+                )}
                 class={post.team.members.map(
                   (playable_class, i) =>
                     playable_class.character.playable_class.id + " "
                 )}
+                currentPage={currentPage}
               />
             ))}
           </tbody>

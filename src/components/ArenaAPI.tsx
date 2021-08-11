@@ -4,44 +4,7 @@ import axios from "axios";
 import Pagination from "./Pagination";
 import Button from "./Button";
 import Loader from "./Loading";
-export interface IPost {
-  id: number;
-  name: string;
-  realm: string;
-  region: string;
-  season: string;
-  bracket: string;
-  season_match_statistics: {
-    played: number;
-    won: number;
-    lost: number;
-  };
-  faction:null| {
-    type: string | null; 
-  };
-  rating: number;
-  rank: number;
-  team: {
-    name: string;
-    realm: {
-      slug: string;
-    };
-    members: [
-      {
-        character: {
-          name: string;
-          playable_class: {
-            key: {
-              href: string;
-            };
-            id: number;
-          };
-        };
-        rating: number;
-      }
-    ];
-  };
-}
+import {IPost} from "../Interface/IPost";
 
 const defaultPosts: IPost[] = [];
 
@@ -101,10 +64,10 @@ export const ArenaRankingsFetcher = () => {
         let error = axios.isCancel(ex)
           ? "Request Cancelled"
           : ex.code === "ECONNABORTED"
-            ? "A timeout has occurred"
-            : ex.response.status === 404
-              ? "Resource Not Found"
-              : "An unexpected error has occurred";
+          ? "A timeout has occurred"
+          : ex.response.status === 404
+          ? "Resource Not Found"
+          : "An unexpected error has occurred";
 
         setError(error);
         setLoading(false);
@@ -116,20 +79,19 @@ export const ArenaRankingsFetcher = () => {
   const indexOfFirstPost: number = indexOfLastPost - postsPerPage;
   const currentPosts: IPost[] = posts.slice(indexOfFirstPost, indexOfLastPost);
   // Change page to
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-  console.log(posts.length)
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
   const handleNextbtn = () => {
-
     setCurrentPage(currentPage + 1);
-
     if (currentPage + 1 > maxPageNumberLimit) {
       setmaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
       setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
     }
-
   };
 
-  const handlePrevbtn = () => { 
+  const handlePrevbtn = () => {
     setCurrentPage(currentPage - 1);
     if ((currentPage - 1) % pageNumberLimit === 0) {
       setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
@@ -137,22 +99,24 @@ export const ArenaRankingsFetcher = () => {
     }
   };
   // set style on page page load
-  let onLoadStyle = "text-white bg-green-500"
-  let onClickStyle2v2 = ""
-  let onClickStyle3v3 = ""
-  let onClickStyle5v5 = ""
+  let onLoadStyle = "text-white bg-green-500";
+  let onClickStyle2v2 = "";
+  let onClickStyle3v3 = "";
+  let onClickStyle5v5 = "";
   if (onLoadBtn === false) {
-    onLoadStyle = ""
+    onLoadStyle = "";
   }
   switch (onClickBtn) {
-    case "2v2": onClickStyle2v2 = "text-white bg-green-500 "
+    case "2v2":
+      onClickStyle2v2 = "text-white bg-green-500 ";
       break;
-    case "3v3": onClickStyle3v3 = "text-white bg-green-500 "
+    case "3v3":
+      onClickStyle3v3 = "text-white bg-green-500 ";
       break;
-    case "5v5": onClickStyle5v5 = "text-white bg-green-500 "
+    case "5v5":
+      onClickStyle5v5 = "text-white bg-green-500 ";
       break;
   }
-
 
   return (
     <>
@@ -161,20 +125,19 @@ export const ArenaRankingsFetcher = () => {
           onClick={() => {
             setBracket("2v2");
             setLoading(true);
-            setOnLoadBtn(false)
+            setOnLoadBtn(false);
             setOnClickBtn("2v2");
             setCurrentPage(1);
           }}
           children="2v2"
           onLoadStyle={onLoadStyle}
           onClickStyle2v2={onClickStyle2v2}
-
         />
         <Button
           onClick={() => {
             setBracket("3v3");
             setLoading(true);
-            setOnLoadBtn(false)
+            setOnLoadBtn(false);
             setOnClickBtn("3v3");
             setCurrentPage(1);
           }}
@@ -185,7 +148,7 @@ export const ArenaRankingsFetcher = () => {
           onClick={() => {
             setBracket("5v5");
             setLoading(true);
-            setOnLoadBtn(false)
+            setOnLoadBtn(false);
             setOnClickBtn("5v5");
             setCurrentPage(1);
           }}
@@ -198,7 +161,7 @@ export const ArenaRankingsFetcher = () => {
           </div>
         )}
       </div>
-      <ArenaRankings posts={currentPosts} />
+      <ArenaRankings posts={currentPosts} currentPage={currentPage} />
       <Pagination
         postsPerPage={postsPerPage}
         totalPosts={posts.length}

@@ -47,13 +47,15 @@ export const Pagination = ({
       </button>
       <button
         className="text-white rounded-sm bg-red inline-block mx-auto px-4 hover:bg-red-800 "
-        onClick={() => paginate(currentPage + 1)}
+        onClick={() => paginate(currentPage + 1, true)}
       >
         <ChevronRightIcon className="h-6 w-6" />
       </button>
       <button
         className="text-white rounded-sm bg-red inline-block mx-auto px-4 hover:bg-red-800 "
-        onClick={() => paginate(pageNumbers.length)}
+        onClick={() => {
+          paginate(pageNumbers.length);
+        }}
       >
         <ChevronDoubleRightIcon className="h-6 w-6" />
       </button>
