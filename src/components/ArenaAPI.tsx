@@ -30,7 +30,7 @@ export const ArenaRankingsFetcher = () => {
   const [onClickBtn, setOnClickBtn]: [string, (onClickBtn: string) => void] =
     React.useState("");
 
-  const defaultURL = "http://localhost:7071/api/ranks/";
+  const defaultURL = "https://arenarankingsapigoat.azurewebsites.net/api/ranks/";
   const [bracket, setBracket]: [string, (bracket: string) => void] =
     React.useState("");
 
