@@ -4,7 +4,7 @@ import axios from "axios";
 import Pagination from "./Pagination";
 import Button from "./Button";
 import Loader from "./Loading";
-import {IPost} from "../Interface/IPost";
+import { IPost } from "../Interface/IPost";
 
 const defaultPosts: IPost[] = [];
 
@@ -30,7 +30,8 @@ export const ArenaRankingsFetcher = () => {
   const [onClickBtn, setOnClickBtn]: [string, (onClickBtn: string) => void] =
     React.useState("");
 
-  const defaultURL = "https://arenarankingsapigoat.azurewebsites.net/api/ranks/";
+  const defaultURL =
+    "https://arenarankingsapigoat.azurewebsites.net/api/ranks/";
   const [bracket, setBracket]: [string, (bracket: string) => void] =
     React.useState("");
 
@@ -94,7 +95,7 @@ export const ArenaRankingsFetcher = () => {
   }
 
   return (
-    <>
+    <React.Fragment>
       <div className="mx-auto mt-12 w-2/3">
         <Button
           onClick={() => {
@@ -130,24 +131,28 @@ export const ArenaRankingsFetcher = () => {
           children="5v5"
           onClickStyle5v5={onClickStyle5v5}
         />
-        {loading && (
-          <div className="flex flex-col items-center mt-2">
-            <Loader />
-          </div>
-        )}
+       
       </div>
-      <ArenaRankings posts={currentPosts} currentPage={currentPage} />
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={posts.length}
-        paginate={paginate}
-        currentPage={currentPage}
-      />
+      {loading && (
+        <Loader />
+        )}
+      {!loading && (
+        <React.Fragment>
+          <ArenaRankings posts={currentPosts} currentPage={currentPage} />
+          <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={posts.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          /> 
+          </React.Fragment>
+      )}
+    
       {error && (
         <div className="flex flex-col items-center mt-2">
           <p className="error">{error}</p>
         </div>
       )}
-    </>
+    </React.Fragment>
   );
 };
