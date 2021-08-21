@@ -102,22 +102,20 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
           className="cursor-pointer border-t-2 border-yellow-100"
           onClick={this.handleClick}
         >
-          <td className="text-grey py-4 px-6 font-medium">
+          <td className="text-grey py-4 font-medium">
             {this.state.expanded ? (
               <ChevronDoubleUpIcon className="h-6 w-6" />
             ) : (
               <ChevronDoubleDownIcon className="h-6 w-6" />
             )}
           </td>
-          <td className="">
+          <td className="text-green-400 py-4 font-medium w-1/2">
             <div>
-              <p className="text-green-400 py-4 px-6 font-medium">
                 {this.props.rank}
-              </p>
             </div>
           </td>
-          <td className="text-red py-4 px-6">{this.props.team}</td>
-          <td className="justify-center mr-2">
+          <td className="text-red py-4 px-0">{this.props.team}</td>
+          <td className="justify-center">
             {classId.map((classPicture, i) => (
               <img
                 key={i}
