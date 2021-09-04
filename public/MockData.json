@@ -1,0 +1,164 @@
+{
+  "players": [
+    {
+      "name": "Barbender",
+      "class": "Warrior",
+      "race": "Human"
+    },
+    {
+      "name": "Morphh",
+      "class": "Mage",
+      "race": "gnome"
+    },
+    {
+      "name": "Nhr",
+      "class": "Warrior",
+      "race": "Dwarf"
+    },
+    {
+      "name": "Hitch0",
+      "class": "Priest",
+      "race": "Human"
+    },
+    {
+      "name": "Ninjaps",
+      "class": "Priest",
+      "race": "Dwarf"
+    },
+    {
+      "name": "Hardumeckat",
+      "class": "Druid",
+      "race": "Night elf"
+    },
+    {
+      "name": "Xtend",
+      "class": "Rogue",
+      "race": "Human"
+    },
+    {
+      "name": "Lockmicke",
+      "class": "Warlock",
+      "race": "Gnome"
+    },
+    {
+      "name": "Bomben",
+      "class": "Warrior",
+      "race": "Human"
+    },
+    {
+      "name": "Razzia",
+      "class": "Druid",
+      "race": "Night elf"
+    },
+    {
+      "name": "Amandus",
+      "class": "Paladin",
+      "race": "Human"
+    },
+    {
+      "name": "Daggaman",
+      "class": "Shaman",
+      "race": "Draenei"
+    },
+    {
+      "name": "Stark",
+      "class": "Warrior",
+      "race": "Human"
+    },
+    {
+      "name": "Bonkrs",
+      "class": "Priest",
+      "race": "Dwarf"
+    },
+    {
+      "name": "Aen",
+      "class": "Hunter",
+      "race": "Night elf"
+    },
+    {
+      "name": "Kamolleflage",
+      "class": "Rogue",
+      "race": "Night elf"
+    },
+    {
+      "name": "Ihaxx",
+      "class": "Hunter",
+      "race": "Night elf"
+    },
+    {
+      "name": "Jakän",
+      "class": "Shaman",
+      "race": "Draenei"
+    },
+    {
+      "name": "Chicknourish",
+      "class": "Druid",
+      "race": "Night elf"
+    },
+    {
+      "name": "Aenima",
+      "class": "Warlock",
+      "race": "Gnome"
+    },
+    {
+      "name": "Falmaador",
+      "class": "Shaman",
+      "race": "Draenei"
+    },
+    {
+      "name": "Hampy",
+      "class": "Mage",
+      "race": "Gnome"
+    },
+    {
+      "name": "Blåbollen",
+      "class": "Mage",
+      "race": "Human"
+    },
+    {
+      "name": "Storlol",
+      "class": "Mage",
+      "race": "Gnome"
+    },
+    {
+      "name": "Musharrows",
+      "class": "Hunter",
+      "race": "Night elf"
+    },
+    {
+      "name": "Veggahontas",
+      "class": "Hunter",
+      "race": "Night elf"
+    },
+    {
+      "name": "Spacebeast",
+      "class": "Shaman",
+      "race": "Draenei"
+    },
+    {
+      "name": "Mizi",
+      "class": "Priest",
+      "race": "Dwarf"
+    },
+    {
+      "name": "Inrin",
+      "class": "Priest",
+      "race": "Night elf"
+    },
+    {
+      "name": "Flingolini",
+      "class": "Paladin",
+      "race": "Human"
+    },
+    {
+      "name": "Kakan",
+      "class": "Druid",
+      "race": "Night elf"
+    },
+    {
+      "name": "Mojo",
+      "class": "Shaman",
+      "race": "Night elf"
+    }
+  ]
+}

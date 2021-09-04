@@ -8,7 +8,7 @@ function Nav() {
     <div>
       <nav className="bg-black border-b-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-24">
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <img
@@ -19,26 +19,26 @@ function Nav() {
               </div>
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline space-x-4">
-                  <Link to="/">
-                    <p className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium uppercase">
+                  <Link to="/Rankings">
+                    <p className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-xl font-medium uppercase">
                       Arena rankings
                     </p>
                   </Link>
-                  <Link to="/">
-                    <p className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium uppercase">
+                  <Link to="/Team">
+                    <p className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-xl font-medium uppercase">
                       Team
                     </p>
                   </Link>
-                  <Link to="/">
-                    <p className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium uppercase">
+                  {/* <Link to="/">
+                    <p className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-xl font-medium uppercase">
                       About
                     </p>
                   </Link>
                   <Link to="/">
-                    <p className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium uppercase">
+                    <p className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-xl font-medium uppercase">
                       Contact
                     </p>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>
@@ -98,15 +98,25 @@ function Nav() {
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          {(ref) => (
+          {/* {(ref: any) => ( */}
             <div className="md:hidden" id="mobile-menu">
-              <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              <Link to="/Rankings">
                 <p className="hover:bg-black text-white block px-3 py-2 rounded-md text-base font-medium uppercase">
                   Rankings
                 </p>
+                </Link>
+              </div>
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              <Link to="/Team">
+                <p className="hover:bg-black text-white block px-3 py-2 rounded-md text-base font-medium uppercase">
+                  Team
+                </p>
+                </Link>
               </div>
             </div>
-          )}
+
+          {/* // )} */}
         </Transition>
       </nav>
     </div>

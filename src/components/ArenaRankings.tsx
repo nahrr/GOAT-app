@@ -1,10 +1,10 @@
 import React from "react";
 import {IPost} from "../Interface/IPost";
 import { ArenaCard } from "./ArenaCard";
-
 export function ArenaRankings({ posts, currentPage }: { posts: IPost[]; currentPage: number}) {
   
   return (
+    
       <div className="overflow-x-auto mt-12 ">
         <table className="table-fixed sm:w-2/3 mx-auto bg-black text-left">
           <thead className="bg-black border-solid border-b-2 border-yellow-100">

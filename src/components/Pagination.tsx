@@ -27,19 +27,27 @@ export const Pagination = ({
     <div className="flex flex-row m-auto w-1/6">
       <button
         className="text-white rounded-sm bg-red inline-block mx-auto px-4 hover:bg-red-800 "
-        onClick={() => paginate(1)}
+        onClick={() => {
+          paginate(1);
+        }}
       >
         <ChevronDoubleLeftIcon className="h-6 w-6" />
       </button>
       <button
         className="text-white rounded-sm bg-red inline-block mx-auto px-4 hover:bg-red-800 "
-        onClick={() => paginate(currentPage - 1)}
+        onClick={() => {
+          if (currentPage !== 1) {
+            paginate(currentPage - 1);
+          }
+        }}
       >
         <ChevronLeftIcon className="h-6 w-6" />
       </button>
       <button
         className="text-white rounded-sm bg-red inline-block mx-auto px-4 hover:bg-red-800 "
-        onClick={() => paginate(currentPage + 1, true)}
+        onClick={() => {
+          if (currentPage !== pageNumbers.length) paginate(currentPage + 1);
+        }}
       >
         <ChevronRightIcon className="h-6 w-6" />
       </button>
