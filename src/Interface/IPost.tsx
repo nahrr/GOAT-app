@@ -1,4 +1,4 @@
-export interface IPost {
+export interface ArenaPosts {
     id: number;
     name: string;
     realm: string;

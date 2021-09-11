@@ -4,52 +4,53 @@ import axios from "axios";
 import Pagination from "./Pagination";
 import Button from "./Button";
 import Loader from "./Loading";
-import { IPost } from "../Interface/IPost";
+import { ArenaPosts } from "../Interface/IPost";
+import { useState } from "react";
+import { activeStyle } from "./Button";
 
-const defaultPosts: IPost[] = [];
+export type ActiveButton = {
+  twos: boolean;
+  threes: boolean;
+  fives: boolean;
+  seasonOne: boolean;
+  seasonTwo: boolean;
+};
+
+const defaultPosts: ArenaPosts[] = [];
 
 export const ArenaRankingsFetcher = () => {
-  const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] =
-    React.useState(defaultPosts);
+  const [posts, setPosts]: [ArenaPosts[], (posts: ArenaPosts[]) => void] =
+    useState(defaultPosts);
 
-  const [loading, setLoading]: [boolean, (loading: boolean) => void] =
-    React.useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const [error, setError]: [string, (error: string) => void] =
-    React.useState("");
+  const [error, setError] = useState<string>("");
 
-  const [currentPage, setCurrentPage]: [number, (currentPage: number) => any] =
-    React.useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const [postsPerPage]: [number, (postsPerPage: number) => any] =
-    React.useState(10);
+  const [postsPerPage] = useState<number>(10);
 
-  const [onLoadBtn, setOnLoadBtn]: [boolean, (onLoadBtn: boolean) => void] =
-    React.useState<boolean>(true);
-
-  const [onClickBtn, setOnClickBtn]: [string, (onClickBtn: string) => void] =
-    React.useState("");
-
-  const defaultURL =
-    "https://arenarankingsapigoat.azurewebsites.net/api/ranks/";
+  const [buttonStyle, setButtonStyle] = useState<ActiveButton>({
+    twos: true,
+    threes: false,
+    fives: false,
+    seasonOne: true,
+    seasonTwo: false,
+  });
   const [bracket, setBracket]: [string, (bracket: string) => void] =
-    React.useState("");
+    React.useState("2v2");
+  const [season, setSeason] = useState<string>("1");
 
-  if (bracket === "") {
-    setBracket("2v2");
-  }
+  const defaultURL = "https://arenarankingsapigoat.azurewebsites.net/api/ranks/";
 
+  console.log(defaultURL + bracket + "/" + season);
   React.useEffect(() => {
     axios
-      .get(defaultURL + bracket, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        timeout: 1000000,
-      })
+      .get(defaultURL + bracket + "/" + season)
       .then((response) => {
         setPosts(response.data);
         setLoading(false);
+        setError("");
       })
       .catch((ex) => {
         let error = axios.isCancel(ex)
@@ -68,74 +69,97 @@ export const ArenaRankingsFetcher = () => {
   // Get current posts
   const indexOfLastPost: number = currentPage * postsPerPage;
   const indexOfFirstPost: number = indexOfLastPost - postsPerPage;
-  const currentPosts: IPost[] = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts: ArenaPosts[] = posts.slice(
+    indexOfFirstPost,
+    indexOfLastPost
+  );
   // Change page to
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
-  // set style on page page load
-  let onLoadStyle = "text-white bg-green-500";
-  let onClickStyle2v2 = "";
-  let onClickStyle3v3 = "";
-  let onClickStyle5v5 = "";
-  if (onLoadBtn === false) {
-    onLoadStyle = "";
-  }
-  switch (onClickBtn) {
-    case "2v2":
-      onClickStyle2v2 = "text-white bg-green-500 ";
-      break;
-    case "3v3":
-      onClickStyle3v3 = "text-white bg-green-500 ";
-      break;
-    case "5v5":
-      onClickStyle5v5 = "text-white bg-green-500 ";
-      break;
-  }
-
   return (
     <React.Fragment>
-      <div className="mx-auto mt-12 w-2/3">
+      <div className="flex flex-row items-center justify-between mx-auto w-2/3 mt-6"> 
+      <div className="">
         <Button
           onClick={() => {
             setBracket("2v2");
             setLoading(true);
-            setOnLoadBtn(false);
-            setOnClickBtn("2v2");
+            setButtonStyle({
+              ...buttonStyle,
+              twos: true,
+              threes: false,
+              fives: false,
+            });
             setCurrentPage(1);
           }}
           children="2v2"
-          onLoadStyle={onLoadStyle}
-          onClickStyle2v2={onClickStyle2v2}
+          buttonStyle={buttonStyle.twos ? activeStyle : null}
         />
         <Button
           onClick={() => {
             setBracket("3v3");
             setLoading(true);
-            setOnLoadBtn(false);
-            setOnClickBtn("3v3");
+            setButtonStyle({
+              ...buttonStyle,
+              twos: false,
+              threes: true,
+              fives: false,
+            });
             setCurrentPage(1);
           }}
           children="3v3"
-          onClickStyle3v3={onClickStyle3v3}
+          buttonStyle={buttonStyle.threes ? activeStyle : null}
         />
         <Button
           onClick={() => {
             setBracket("5v5");
             setLoading(true);
-            setOnLoadBtn(false);
-            setOnClickBtn("5v5");
+            setButtonStyle({
+              ...buttonStyle,
+              twos: false,
+              threes: false,
+              fives: true,
+            });
             setCurrentPage(1);
           }}
           children="5v5"
-          onClickStyle5v5={onClickStyle5v5}
+          buttonStyle={buttonStyle.fives ? activeStyle : null}
         />
-       
+        </div>
+        <div className="">
+          <Button
+            onClick={() => {
+              // setLoading(true);
+              // setSeason("1");
+              setButtonStyle({
+                ...buttonStyle,
+                seasonOne: true,
+                seasonTwo: false,
+              });
+            }}
+            children="S1"
+            buttonStyle={buttonStyle.seasonOne ? activeStyle : null}
+          />
+          <Button
+            onClick={() => {
+              // setLoading(true);
+              // setSeason("2");
+              setButtonStyle({
+                ...buttonStyle,
+                seasonOne: false,
+                seasonTwo: true,
+              });
+            }}
+            children="S2"
+            buttonStyle={buttonStyle.seasonTwo ? activeStyle : null}
+          />
+       </div>
+      
       </div>
-      {loading && (
-        <Loader />
-        )}
+      <div className="mx-auto w-2/3"></div>
+      {loading && <Loader />}
       {!loading && (
         <React.Fragment>
           <ArenaRankings posts={currentPosts} currentPage={currentPage} />
@@ -144,10 +168,10 @@ export const ArenaRankingsFetcher = () => {
             totalPosts={posts.length}
             paginate={paginate}
             currentPage={currentPage}
-          /> 
-          </React.Fragment>
+          />
+        </React.Fragment>
       )}
-    
+
       {error && (
         <div className="flex flex-col items-center mt-2">
           <p className="error">{error}</p>

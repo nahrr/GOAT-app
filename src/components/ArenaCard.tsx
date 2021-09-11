@@ -1,12 +1,12 @@
 import React from "react";
-import {IPost} from "../Interface/IPost";
+import {ArenaPosts} from "../Interface/IPost";
 import {
   ChevronDoubleDownIcon,
   ChevronDoubleUpIcon,
 } from "@heroicons/react/solid";
 
 type ArenaCardProps = {
-  post?: IPost;
+  post?: ArenaPosts;
   rank: number;
   team: string;
   rating: number;

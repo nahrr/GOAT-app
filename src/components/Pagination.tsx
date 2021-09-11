@@ -24,7 +24,7 @@ export const Pagination = ({
   }
 
   return (
-    <div className="flex flex-row m-auto w-1/6">
+    <div className="flex flex-row m-auto w-1/6 mb-2">
       <button
         className="text-white rounded-sm bg-red inline-block mx-auto px-4 hover:bg-red-800 "
         onClick={() => {

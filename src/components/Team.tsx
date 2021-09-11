@@ -8,16 +8,26 @@ type TeamProps = {
   race?: string;
 };
 
+type Druid = {
+  name?: string;
+  class?: string;
+  spec?: string;
+  race?: string;
+}
+
+const druid: Druid[] = [];
+
 const defaultPosts: TeamProps[] = [];
 
 export const Team = () => {
-  const [team, setTeam]: [TeamProps[], (team: TeamProps[]) => void] =
+  const [team, setTeam] =
     useState(defaultPosts);
+  
   useEffect(() => {
     axios
       .get("MockData.json")
       .then((res) => {
-        console.log(res.data.players);
+        res.data.players.sort((a: { class: number; }, b: { class: number; }) => (a.class > b.class) ? 1 : -1)
         setTeam(res.data.players);
       })
       .catch((err: any) => console.error(err));

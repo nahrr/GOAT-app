@@ -1,36 +1,27 @@
 import React from "react";
 
-interface Props {
+export const activeStyle: string = " bg-green-500";
+type ButtonProps = {
   children?: React.ReactNode;
   onClick: () => void;
   onLoadStyle?: string;
-  onClickStyle2v2?: string;
-  onClickStyle3v3?: string;
-  onClickStyle5v5?: string;
+  buttonStyle?: string | null;
 }
 
-const Button: React.FC<Props> = ({
-  children,
-  onClick,
-  onLoadStyle,
-  onClickStyle2v2,
-  onClickStyle3v3,
-  onClickStyle5v5,
-}) => {
+const Button = (props: ButtonProps) => {
+
+  const activeStyle: string = "bg-green-500"
   return (
+   
     <button
       onClick={() => {
-        onClick();
+        props.onClick();
       }}
       className={
-        onLoadStyle +
-        " bg-transparent font-semibold py-2 px-4 border text-white " +
-        onClickStyle2v2 + " " +
-        onClickStyle3v3 + " " +
-        onClickStyle5v5 + " " 
+        `bg-transparent font-semibold py-2 px-4 border text-white ${props.buttonStyle}`
       }
     >
-      {children}
+      {props.children}
     </button>
   );
 };

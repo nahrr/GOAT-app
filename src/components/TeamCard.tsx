@@ -1,3 +1,4 @@
+import { useState } from "react";
 
 type Team = {
   name?: string;
@@ -7,6 +8,7 @@ type Team = {
 };
 
 export const TeamCard = (props: Team) => {
+
   let classColor: string = "";
   let playerClass: string = "";
   let pC = props.class?.toLowerCase();
@@ -48,6 +50,7 @@ export const TeamCard = (props: Team) => {
       classColor = "#FF7C0A";
       break;
   }
+
   return (
     <div className="w-4/5 rounded-lg md:w-2/5 lg:w-2/5 xl:w-1/5">
       <div className="bg-black border-2 border-white rounded-lg bg-black my-auto mx-auto">
