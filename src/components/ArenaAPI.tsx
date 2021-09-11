@@ -41,12 +41,12 @@ export const ArenaRankingsFetcher = () => {
     React.useState("2v2");
   const [season, setSeason] = useState<string>("1");
 
-  const defaultURL = "https://arenarankingsapigoat.azurewebsites.net/api/ranks/";
+  const prodURL = "https://arenarankingsapigoat.azurewebsites.net/api/ranks/";
+  const devURL = "http://localhost:7071/api/ranks/"
 
-  console.log(defaultURL + bracket + "/" + season);
   React.useEffect(() => {
     axios
-      .get(defaultURL + bracket + "/" + season)
+      .get(prodURL + bracket + "/" + season)
       .then((response) => {
         setPosts(response.data);
         setLoading(false);
