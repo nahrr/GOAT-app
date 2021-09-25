@@ -35,7 +35,7 @@ export const ArenaPage = () => {
   });
   const axiosOptions = {
     method: "get",
-    url: prodURL + bracket + season,
+    url: devURL + bracket + season,
     headers: {
       accept: "*/*",
     },

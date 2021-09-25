@@ -9,12 +9,12 @@ export function Table({ posts, currentPage }: { posts: ArenaPosts[]; currentPage
         <table className="table-fixed sm:w-2/3 mx-auto bg-black text-left">
           <thead className="bg-black border-solid border-b-2 border-yellow-100">
             <tr className="">
-              <th></th>
-              <th className="text-white py-4">Rank</th>
-              <th className="text-white py-4 px-0">Team</th>
-              <th className="text-white py-4 px-2">Comp</th>
-              <th className="text-white py-4 px-6">Realm</th>
-              <th className="text-white py-4 px-6">Rating</th>
+              <th className="w-1/12"></th>
+              <th className="text-white py-4 w-1/12">Rank</th>
+              <th className="text-white py-4 px-0 w-3/12">Team</th>
+              <th className="text-white py-4 px-2 w-2/6">Comp</th>
+              <th className="text-white py-4 px-6 w-1/6">Realm</th>
+              <th className="text-white py-4 px-6 w-1/6">Rating</th>
             </tr>
           </thead>
           {/* divide-y divide-yellow-100 */}

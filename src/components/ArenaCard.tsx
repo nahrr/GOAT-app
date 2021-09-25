@@ -109,17 +109,15 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
               <ChevronDoubleDownIcon className="h-6 w-6" />
             )}
           </td>
-          <td className="text-green-400 py-4 font-medium w-1/2">
-            <div>
+          <td className="text-green-400 py-4 font-medium">
                 {this.props.rank}
-            </div>
           </td>
           <td className="text-red py-4 px-0">{this.props.team}</td>
-          <td className="justify-center">
+          <td className="flex flex-row items-center justify-start py-4 truncate">
             {classId.map((classPicture, i) => (
               <img
                 key={i}
-                className="inline-block w-8 h-8 object-cover rounded-lg"
+                className="h-8 object-cover rounded-2xl"
                 src={classPicture}
                 alt="class"
               />
