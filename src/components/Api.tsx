@@ -24,7 +24,6 @@ export const useAxios = (axiosParams: {
   };
 
   useEffect(() => {
-    console.log(axiosParams.url);
     fetchData(axiosParams);
   }, [axiosParams.url]);
 
