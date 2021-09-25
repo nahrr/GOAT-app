@@ -85,6 +85,7 @@ export class ArenaCard extends React.Component<ArenaCardProps, ArenaCardState> {
           case "11":
             classId.push("/images/assets/classicon_druid.jpg");
             break;
+          default: classId.push("/images/assets/questionmark.jpg");
         }
       });
     }
