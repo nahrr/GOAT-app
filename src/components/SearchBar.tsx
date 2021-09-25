@@ -1,7 +1,7 @@
 import { SearchIcon } from "@heroicons/react/outline";
 type searchBar = {
-  filter: any;
-  value: string;
+  filter?: any;
+  value?: string;
 };
 
 export const SearchBar = (props: searchBar) => {

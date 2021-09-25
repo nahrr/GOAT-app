@@ -1,7 +1,7 @@
 import React from "react";
 import {ArenaPosts} from "../Interface/IPost";
 import { ArenaCard } from "./ArenaCard";
-export function ArenaRankings({ posts, currentPage }: { posts: ArenaPosts[]; currentPage: number}) {
+export function Table({ posts, currentPage }: { posts: ArenaPosts[]; currentPage: number}) {
   
   return (
     

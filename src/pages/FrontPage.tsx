@@ -1,9 +1,9 @@
 import * as React from "react";
-import { ArenaRankingsFetcher } from "../components/ArenaAPI";
+import { ArenaPage } from "../components/ArenaPage";
 
 const FrontPage = () =>{
     return (
-        <ArenaRankingsFetcher/>
+        <ArenaPage/>
     );
 }
 

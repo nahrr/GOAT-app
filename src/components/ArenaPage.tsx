@@ -1,13 +1,13 @@
 import * as React from "react";
-import { ArenaRankings } from "./ArenaRankings";
-import axios from "axios";
+import { Table } from "./Table";
 import Pagination from "./Pagination";
 import Button from "./Button";
 import Loader from "./Loading";
 import { ArenaPosts } from "../Interface/IPost";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { activeStyle } from "./Button";
 import { SearchBar } from "./SearchBar";
+import { useAxios } from "./Api";
 
 export type ActiveButton = {
   twos: boolean;
@@ -17,73 +17,56 @@ export type ActiveButton = {
   seasonTwo: boolean;
 };
 
-const arenaPosts: ArenaPosts[] = [];
+const prodURL = "https://arenarankingsapigoat.azurewebsites.net/api/ranks/";
+const devURL = "http://localhost:7071/api/ranks/";
 
-export const ArenaRankingsFetcher = () => {
-  const [posts, setPosts] = useState<ArenaPosts[]>(arenaPosts);
-  const [iniPosts, setIniPosts] = useState<ArenaPosts[]>(arenaPosts);
-
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const [error, setError] = useState<string>("");
-
+export const ArenaPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-
   const [postsPerPage] = useState<number>(10);
+  const [bracket, setBracket] = React.useState<string>("2v2");
+  const [season, setSeason] = useState<string>("/2");
 
   const [buttonStyle, setButtonStyle] = useState<ActiveButton>({
     twos: true,
     threes: false,
     fives: false,
-    seasonOne: true,
-    seasonTwo: false,
+    seasonOne: false,
+    seasonTwo: true,
   });
-  const [bracket, setBracket]: [string, (bracket: string) => void] =
-    React.useState("2v2");
-  const [season, setSeason] = useState<string>("1");
+  const axiosOptions = {
+    method: "get",
+    url: prodURL + bracket + season,
+    headers: {
+      accept: "*/*",
+    },
+  };
 
-  const prodURL = "https://arenarankingsapigoat.azurewebsites.net/api/ranks/";
-  const devURL = "http://localhost:7071/api/ranks/";
+  const { response, loading, error } = useAxios(axiosOptions);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [posts, setPosts] = useState<ArenaPosts[]>(response);
+  const [iniPosts, setIniPosts] = useState<ArenaPosts[]>(response);
+  console.log(loading);
+  useEffect(() => {
+    setPosts(response);
+    setIniPosts(response);
+    setIsLoading(loading);
+  }, [response, loading]);
 
-  React.useEffect(() => {
-    axios
-      .get(prodURL + bracket + "/" + season)
-      .then((response) => {
-        setPosts(response.data);
-        setIniPosts(response.data);
-        setLoading(false);
-        setError("");
-      })
-      .catch((ex) => {
-        let error = axios.isCancel(ex)
-          ? "Request Cancelled"
-          : ex.code === "ECONNABORTED"
-          ? "A timeout has occurred"
-          : ex.response.status === 404
-          ? "Resource Not Found"
-          : "An unexpected error has occurred";
-
-        setError(error);
-        setLoading(false);
-      });
-  }, [bracket]);
-
-  // Get current posts
+  //Get current posts
   const indexOfLastPost: number = currentPage * postsPerPage;
   const indexOfFirstPost: number = indexOfLastPost - postsPerPage;
-  const currentPosts: ArenaPosts[] = posts.slice(
-    indexOfFirstPost,
-    indexOfLastPost
-  );
+  const currentPosts: any = posts.slice(indexOfFirstPost, indexOfLastPost);
+
   // Change page to
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
+
   const [searchWord, setSearchWord] = useState<string>("");
   const filter = (e: React.ChangeEvent<HTMLInputElement>) => {
     const keyword = e.target.value;
     if (keyword !== "") {
-      const results = posts.filter((user) => {
+      const results = response.filter((user) => {
         let teamName = user.team.name.toLowerCase();
         return teamName.startsWith(keyword.toLowerCase());
       });
@@ -101,7 +84,7 @@ export const ArenaRankingsFetcher = () => {
           <Button
             onClick={() => {
               setBracket("2v2");
-              setLoading(true);
+              setIsLoading(true);
               setButtonStyle({
                 ...buttonStyle,
                 twos: true,
@@ -116,7 +99,7 @@ export const ArenaRankingsFetcher = () => {
           <Button
             onClick={() => {
               setBracket("3v3");
-              setLoading(true);
+              setIsLoading(true);
               setButtonStyle({
                 ...buttonStyle,
                 twos: false,
@@ -131,7 +114,7 @@ export const ArenaRankingsFetcher = () => {
           <Button
             onClick={() => {
               setBracket("5v5");
-              setLoading(true);
+              setIsLoading(true);
               setButtonStyle({
                 ...buttonStyle,
                 twos: false,
@@ -155,8 +138,8 @@ export const ArenaRankingsFetcher = () => {
         <div className="mt-6 lg:mt-0">
           <Button
             onClick={() => {
-              // setLoading(true);
-              // setSeason("1");
+              setIsLoading(true);
+              setSeason("/1");
               setButtonStyle({
                 ...buttonStyle,
                 seasonOne: true,
@@ -168,8 +151,8 @@ export const ArenaRankingsFetcher = () => {
           />
           <Button
             onClick={() => {
-              // setLoading(true);
-              // setSeason("2");
+              setIsLoading(true);
+              setSeason("/2");
               setButtonStyle({
                 ...buttonStyle,
                 seasonOne: false,
@@ -182,13 +165,13 @@ export const ArenaRankingsFetcher = () => {
         </div>
       </div>
       <div className="mx-auto w-2/3"></div>
-      {loading && <Loader />}
-      {!loading && (
+      {isLoading && <Loader />}
+      {!isLoading && (
         <React.Fragment>
-          <ArenaRankings posts={currentPosts} currentPage={currentPage} />
+          <Table posts={currentPosts} currentPage={currentPage} />
           <Pagination
             postsPerPage={postsPerPage}
-            totalPosts={posts.length}
+            totalPosts={response.length}
             paginate={paginate}
             currentPage={currentPage}
           />

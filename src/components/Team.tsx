@@ -8,15 +8,6 @@ type TeamProps = {
   race?: string;
 };
 
-type Druid = {
-  name?: string;
-  class?: string;
-  spec?: string;
-  race?: string;
-}
-
-const druid: Druid[] = [];
-
 const defaultPosts: TeamProps[] = [];
 
 export const Team = () => {
